@@ -1,0 +1,28 @@
+import pulp
+
+# 1. Definir el problema (Maximización)
+model = pulp.LpProblem("Cluster_Optimization", pulp.LpMaximize)
+
+# 2. Variables de decisión
+x = pulp.LpVariable("Backend", lowBound=0, upBound=6, cat='Integer')
+y = pulp.LpVariable("Data_Workers", lowBound=0, upBound=7, cat='Integer')
+
+# 3. Función objetivo
+model += 300 * x + 250 * y, "Rendimiento_Total"
+
+# 4. Restricciones
+
+# Memoria RAM
+model += 2 * x + y <= 16, "RAM_Limit"
+
+# Almacenamiento SSD
+model += x + 2 * y <= 17, "SSD_Limit"
+
+# 5. Resolver
+model.solve()
+
+# 6. Resultados
+print(f"Estado: {pulp.LpStatus[model.status]}")
+print(f"Contenedores Backend: {x.varValue}")
+print(f"Contenedores Data Workers: {y.varValue}")
+print(f"Rendimiento Máximo: ${pulp.value(model.objective)} USD/hora")
