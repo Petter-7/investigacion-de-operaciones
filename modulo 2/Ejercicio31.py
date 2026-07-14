@@ -10,7 +10,7 @@ def mostrar_avance(v):
     iteracion[0] += 1
     print(f"Iteración {iteracion[0]}: x={v[0]:.4f}, y={v[1]:.4f}, costo={costo(v):.4f}")
 
-resultado = minimize(costo, x0=[0, 0], method='CG', callback=mostrar_avance)
+resultado = minimize(costo, x0=[0, 0], method='BFGS', callback=mostrar_avance)
 print("\nResultado final:", resultado.x, resultado.fun)
 
 # Actividad en clase: Interpretar el valor de resultado.x y resultado.fun. ¿Qué representan? ¿Cuál es el costo mínimo alcanzado?
